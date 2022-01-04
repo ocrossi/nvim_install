@@ -1,0 +1,16 @@
+FROM ubuntu:latest
+
+RUN apt-get -y update && apt-get -y upgrade && \
+		apt-get install  -y curl  sudo
+
+RUN adduser --disabled-password --gecos '' nvimuser
+RUN adduser nvimuser sudo
+RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+USER nvimuser
+
+RUN mkdir -p /home/nvimuser/workdir
+WORKDIR /home/nvimuser/workdir
+
+COPY ./configs/* .
+
+ENTRYPOINT bash
