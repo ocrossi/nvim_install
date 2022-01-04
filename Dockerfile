@@ -1,38 +1,37 @@
-FROM alpine:latest
+FROM ubuntu:latest
 
-ENV UID="1000" \
-    UNAME="nvimuser" \
-    GID="1000" \
-    GNAME="nvimuser" \
-    SHELL="/bin/bash" \
-    UHOME=/home/nvimuser
+RUN apt-get -y update && apt-get -y upgrade && \
+		apt-get install  -y curl  sudo git
+RUN apt install build-essential -y --no-install-recommends
+#npm install
+RUN curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+RUN sudo apt-get install -y nodejs
 
-RUN apk update && apk upgrade && apk --no-cache add curl sudo bash xz
+RUN adduser --disabled-password --gecos '' nvimuser
+RUN adduser nvimuser sudo
+RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
-# Create HOME dir
-RUN mkdir -p "${UHOME}" \
-    && chown "${UID}":"${GID}" "${UHOME}" \
-# Create user
-    && echo "${UNAME}:x:${UID}:${GID}:${UNAME},,,:${UHOME}:${SHELL}" \
-    >> /etc/passwd \
-    && echo "${UNAME}::17032:0:99999:7:::" \
-    >> /etc/shadow \
-# No password sudo
-    && echo "${UNAME} ALL=(ALL) NOPASSWD: ALL" \
-    > "/etc/sudoers.d/${UNAME}" \
-    && chmod 0440 "/etc/sudoers.d/${UNAME}" \
-# Create group
-    && echo "${GNAME}:x:${GID}:${UNAME}" \
-    >> /etc/group
+USER nvimuser
+WORKDIR /home/nvimuser
+# install nvim using appimage
+RUN curl -LO https://github.com/neovim/neovim/releases/download/v0.6.1/nvim.appimage
+RUN sudo chmod u+x ./nvim.appimage
+RUN sudo ./nvim.appimage --appimage-extract
+RUN sudo ./squashfs-root/AppRun --version
+RUN sudo mv squashfs-root / && sudo ln -s /squashfs-root/AppRun /usr/bin/nvim
 
 
-USER $UNAME
+# nvim plugin setup
+RUN mkdir -p /home/nvimuser/.config/nvim/autoload
+RUN sudo curl -fLo /home/nvimuser/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
+RUN sudo apt-get install -y fzf
 
-
-RUN mkdir -p /home/nvimuser/
-WORKDIR /home/nvimuser/
+RUN mkdir -p /home/nvimuser/workdir
+WORKDIR /home/nvimuser/workdir
 
 COPY ./configs/* .
+RUN sudo npm install -g npm@8.3.0
+RUN sh ./nvim_setup.sh
 
 ENTRYPOINT bash

@@ -1,14 +1,19 @@
 #!/bin/bash
 
-mkdir -p $HOME/.config/nvim/lua/ocrossi
-cp ./init.vim ./plugins.vim $HOME/.config/nvim
-cp ./init.lua ./telescope.lua ./lualine.lua ./gitsigns.lua ./lsp.lua ./treesitter.lua $HOME/.config/nvim/lua/ocrossi
-#source $HOME/.config/nvim/init.vim
-nvim --headless +PlugInstall +qall
+#UHOME='/home/nvimuser/'
+
+#mkdir -p $UHOME/.config/nvim/lua/ocrossi
+mkdir -p ~/.config/nvim/lua/ocrossi
+#cp ./init.vim ./plugins.vim $UHOME/.config/nvim
+cp ./init.vim ./plugins.vim ~/.config/nvim
+#cp ./init.lua ./telescope.lua ./lualine.lua ./gitsigns.lua ./lsp.lua ./treesitter.lua $UHOME/.config/nvim/lua/ocrossi
+cp ./init.lua ./telescope.lua ./lualine.lua ./gitsigns.lua ./lsp.lua ./treesitter.lua ~/.config/nvim/lua/ocrossi
+#source $UHOME/.config/nvim/init.vim
+nvim +PlugInstall +qall
 
 # language servers installlation
-npm install -g typescript typescript-language-server
-npm i -g pyright
-npm i -g bash-language-server
+sudo npm install -g typescript typescript-language-server
+sudo npm i -g pyright
+sudo npm i -g bash-language-server
 #brew install llvm #only for mac lets go to nix to improve script, for clangd support
 
