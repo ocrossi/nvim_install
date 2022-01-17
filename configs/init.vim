@@ -48,7 +48,7 @@ noremap <C-l> <C-W>l
 
 nnoremap <F3> :sp<cr>
 nnoremap <F4> :vsp<cr>
-nnoremap <F12> :qall<cr>
+nnoremap <F11> :qall<cr>
 nnoremap <F10> :w<cr>
 inoremap <F10> <esc>:w<cr>
 vnoremap <F10> <esc>:w<cr>
@@ -56,6 +56,8 @@ noremap <C-a> 0
 noremap <C-e> $
 inoremap <C-a> <esc>0i<right>
 inoremap <C-e> <esc>$i
+
+inoremap <leader>jj console.log('');<left><left><left>
 
 
 "withdraw highlights

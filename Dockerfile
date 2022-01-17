@@ -34,4 +34,7 @@ COPY ./configs/* .
 RUN sudo npm install -g npm@8.3.0
 RUN sh ./nvim_setup.sh
 
-ENTRYPOINT bash
+RUN mkdir -p /home/nvimuser/workspace
+WORKDIR /home/nvimuser/workspace/
+
+ENTRYPOINT nvim "$@"

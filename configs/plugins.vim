@@ -7,6 +7,12 @@ endif
 
 call plug#begin('$HOME/.config/nvim/autoload/plugged')
 Plug  'gruvbox-community/gruvbox'
+Plug 'folke/tokyonight.nvim'
+
+"treesitter
+"Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
+Plug 'NarutoXY/themer.lua', { 'branch': 'dev' } "dev branch has more plugin support
+
 Plug 'preservim/nerdtree'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'gcmt/taboo.vim'
@@ -34,10 +40,6 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'L3MON4D3/LuaSnip'
 Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'onsails/lspkind-nvim'
-
-"treesitter
-"Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
-
 call plug#end()
 
 
@@ -46,7 +48,7 @@ call plug#end()
 " --- Colors
 
 set background=dark
-colorscheme gruvbox
+colorscheme tokyonight
 
 nnoremap <C-f> :NERDTreeFocus<cr>
 nnoremap <F2> :NERDTreeToggle<cr>	z
