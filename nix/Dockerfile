@@ -4,7 +4,7 @@ RUN nix-channel --update
 
 RUN nix-build -A pythonFull '<nixpkgs>'
 
-RUN nix-env -iA nixos.git
+#RUN nix-env -iA nixos.git
 #\
 #		nixos.nodePackages.npm \
 #		nixos.fzfnixos.ripgrep \
@@ -19,7 +19,7 @@ USER nvimuser
 RUN mkdir -p /home/nvimuser/workdir
 WORKDIR /home/nvimuser/workdir
 
-COPY ./configs/* .
+COPY ../configs/* .
 
 
 ENTRYPOINT bash

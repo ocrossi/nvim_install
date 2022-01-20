@@ -7,7 +7,7 @@ ENV UID="1000" \
     SHELL="/bin/bash" \
     UHOME=/home/nvimuser
 
-RUN apk update && apk upgrade && apk --no-cache add curl sudo bash xz
+RUN apk update && apk upgrade && apk --no-cache add bash nix
 
 # Create HOME dir
 RUN mkdir -p "${UHOME}" \
